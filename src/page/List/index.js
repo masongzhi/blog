@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { List, Avatar, Icon } from 'antd';
+import {Link} from "react-router-dom";
 
 const listData = [];
 for (let i = 0; i < 5; i++) {
   listData.push({
-    href: 'http://ant.design',
+    href: '/aaa',
     title: `ant design part ${i}`,
     avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
     description: 'Ant Design, a design language for background applications, is refined by Ant UED Team.',
@@ -42,7 +43,7 @@ class ArticleList extends Component {
           >
             <List.Item.Meta
               avatar={<Avatar src={item.avatar} />}
-              title={<a href={item.href}>{item.title}</a>}
+              title={<Link to={item.href}>{item.title}</Link>}
               description={item.description}
             />
             {item.content}
