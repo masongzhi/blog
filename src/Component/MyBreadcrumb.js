@@ -5,7 +5,8 @@ import {Breadcrumb} from 'antd';
 
 const breadcrumbNameMap = {
   '/list': 'list',
-  '/list/article': 'article'
+  '/list/article': 'article',
+  '/write': 'write'
 };
 class MyBreadcrumb extends Component {
   render () {
