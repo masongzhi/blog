@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import {BrowserRouter as Router, Route, Link} from "react-router-dom";
+import {BrowserRouter as Router, Route, Link, Switch} from "react-router-dom";
 import './index.css';
 
 import {Layout, Menu, Icon, Row, Col} from 'antd';
 import ArticleList from '../List';
+import Write from '../Write';
 import MyBreadcrumb from '../../Component/MyBreadcrumb'
 
 const {Header, Content, Footer, Sider} = Layout;
@@ -43,8 +44,10 @@ class Home extends Component {
                 <Menu.Item key="5">Alex</Menu.Item>
               </SubMenu>
               <Menu.Item key="9">
-                <Icon type="edit"/>
-                <span>写作区</span>
+                <Link to="/write">
+                  <Icon type="edit"/>
+                  <span>写作区</span>
+                </Link>
               </Menu.Item>
             </Menu>
           </Sider>
@@ -57,7 +60,10 @@ class Home extends Component {
             <Content style={{margin: '0 16px'}}>
               <MyBreadcrumb />
               <div style={{padding: 24, background: '#fff', minHeight: 360}}>
-                <Route exact path="/" component={ArticleList} />
+                <Switch>
+                  <Route exact path="/" component={ArticleList} />
+                  <Route path="/write" component={Write} />
+                </Switch>
               </div>
             </Content>
             <Footer style={{textAlign: 'center'}}>
