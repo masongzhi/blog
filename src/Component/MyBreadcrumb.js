@@ -4,8 +4,8 @@ import {Link, withRouter} from "react-router-dom";
 import {Breadcrumb} from 'antd';
 
 const breadcrumbNameMap = {
-  '/list': 'list',
-  '/list/article': 'article',
+  '/article/:id': 'id',
+  '/article': 'article',
   '/write': 'write'
 };
 class MyBreadcrumb extends Component {

@@ -1,75 +1,94 @@
 import React, {Component} from 'react';
-import {BrowserRouter as Router, Route, Link, Switch} from "react-router-dom";
+import {BrowserRouter as Router, Route, Link, Switch, Redirect} from "react-router-dom";
 import './index.css';
 
-import {Layout, Menu, Icon, Row, Col} from 'antd';
+import {Layout, Menu, Icon, Row, Col, Button} from 'antd';
 import ArticleList from '../List';
+import Article from '../Article';
 import Write from '../Write';
 import MyBreadcrumb from '../../Component/MyBreadcrumb'
+import {fetchArticles} from "../../Api";
+import {message} from "antd/lib/index";
 
-const {Header, Content, Footer, Sider} = Layout;
-const SubMenu = Menu.SubMenu;
+const {Header, Content, Footer} = Layout;
 
 class Home extends Component {
   state = {
     collapsed: false,
+    article: [],
+    total: 0
   };
   onCollapse = (collapsed) => {
     this.setState({collapsed});
   }
+  fetchArticles = () => {
+    fetchArticles({
+
+    }).then((respone) => {
+      this.setState({article: respone.docs});
+      this.setState({total: respone.total});
+    }).catch(error => {
+      message.error(error.message);
+    })
+  };
+
+  componentDidMount = () => {
+    this.fetchArticles()
+  };
 
   render() {
     return (
       <Router>
-        <Layout style={{minHeight: '100vh'}}>
-          <Sider
-            collapsible
-            collapsed={this.state.collapsed}
-            onCollapse={this.onCollapse}
-          >
-            <div className="logo"/>
-            <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-              <Menu.Item key="1">
-                <Link to="/">
-                  <Icon type="book"/>
-                  <span>文章列表</span>
-                </Link>
-              </Menu.Item>
-              <SubMenu
-                key="sub1"
-                title={<span><Icon type="user"/><span>User</span></span>}
-              >
-                <Menu.Item key="3">Tom</Menu.Item>
-                <Menu.Item key="4">Bill</Menu.Item>
-                <Menu.Item key="5">Alex</Menu.Item>
-              </SubMenu>
-              <Menu.Item key="9">
-                <Link to="/write">
-                  <Icon type="edit"/>
-                  <span>写作区</span>
-                </Link>
-              </Menu.Item>
-            </Menu>
-          </Sider>
-          <Layout>
-            <Header style={{background: '#fff', padding: 16, fontSize: 20}}>
-              <Row type="flex" justify="start" align="middle">
-                <Col>MASONGZHI`s blog</Col>
+        <Layout className="layout">
+          <Header>
+            <div className="logo" />
+            <Row type="flex" justify="start">
+              <Col style={{ color: "#fff" }}>MASONGZHI`s blog</Col>
+              <Col offset={2}>
+                <Menu
+                  theme="dark"
+                  mode="horizontal"
+                  defaultSelectedKeys={['1']}
+                  style={{ lineHeight: '64px' }}
+                >
+                  <Menu.Item key="1">
+                    <Link to="/article">
+                      文章
+                    </Link>
+                  </Menu.Item>
+                  <Menu.Item key="2">nav 2</Menu.Item>
+                </Menu>
+              </Col>
+              <Row type="flex" justify="end" style={{flex: 1}}>
+                <Col style={{ color: "#fff" }}>
+                  <Link to="/write">
+                    <Button type="primary">
+                      <Icon type="edit"/>
+                      <span>写作区</span>
+                    </Button>
+                  </Link>
+                </Col>
               </Row>
-            </Header>
-            <Content style={{margin: '0 16px'}}>
-              <MyBreadcrumb />
-              <div style={{padding: 24, background: '#fff', minHeight: 360}}>
-                <Switch>
-                  <Route exact path="/" component={ArticleList} />
-                  <Route path="/write" component={Write} />
-                </Switch>
-              </div>
-            </Content>
-            <Footer style={{textAlign: 'center'}}>
-              Ant Design ©2016 Created by Ant UED
-            </Footer>
-          </Layout>
+            </Row>
+          </Header>
+          <Row type="flex" justify="center">
+            <Col span={12}>
+              <Content>
+                <MyBreadcrumb />
+                <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
+                  <Switch>
+                    <Redirect exact from='/' to='/article'/>
+                    <Route path="/article/:id" component={Article} />
+                    <Route path="/article" component={() => <ArticleList article={this.state.article} total={this.state.total} />} />
+                    <Route path="/write" component={Write} />
+                  </Switch>
+                </div>
+              </Content>
+            </Col>
+          </Row>
+          <Footer style={{ textAlign: 'center' }}>
+            Ant Design ©2016 Created by Ant UED
+          </Footer>
         </Layout>
       </Router>
     );
