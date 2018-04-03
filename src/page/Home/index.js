@@ -21,9 +21,9 @@ class Home extends Component {
   onCollapse = (collapsed) => {
     this.setState({collapsed});
   }
-  fetchArticles = () => {
+  fetchArticles = (page, pageSize) => {
     fetchArticles({
-
+      query: {page, limit: pageSize}
     }).then((respone) => {
       this.setState({article: respone.docs});
       this.setState({total: respone.total});
@@ -56,7 +56,7 @@ class Home extends Component {
                       文章
                     </Link>
                   </Menu.Item>
-                  <Menu.Item key="2">nav 2</Menu.Item>
+                  {/*<Menu.Item key="2">nav 2</Menu.Item>*/}
                 </Menu>
               </Col>
               <Row type="flex" justify="end" style={{flex: 1}}>
@@ -72,14 +72,14 @@ class Home extends Component {
             </Row>
           </Header>
           <Row type="flex" justify="center">
-            <Col span={12}>
+            <Col md={12} sm={20} xs={23}>
               <Content>
                 <MyBreadcrumb />
                 <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
                   <Switch>
                     <Redirect exact from='/' to='/article'/>
                     <Route path="/article/:id" component={Article} />
-                    <Route path="/article" component={() => <ArticleList article={this.state.article} total={this.state.total} />} />
+                    <Route path="/article" component={() => <ArticleList article={this.state.article} total={this.state.total} fetchArticles={this.fetchArticles} />} />
                     <Route path="/write" component={Write} />
                   </Switch>
                 </div>
