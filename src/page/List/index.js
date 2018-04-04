@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { List, Avatar, Icon, Pagination, Row } from 'antd';
 import {Link} from "react-router-dom";
-const ReactMarkdown = require('react-markdown')
+import ReactMarkdown from 'react-markdown';
+import * as DateUtils from '../../utils/dateUtils';
 
 const IconText = ({ type, text }) => (
   <span>
@@ -13,8 +14,12 @@ const IconText = ({ type, text }) => (
 class ArticleList extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      current: 1
+    }
   }
   onPageChange = (page, pageSize) => {
+    this.setState({current: page})
     this.props.fetchArticles(page, pageSize)
     window.scrollTo(0, 0);
   }
@@ -40,6 +45,7 @@ class ArticleList extends Component {
                     id: item.id
                   }}>
                     {item.title}
+                    <span style={{color: "#969696", paddingLeft: "10px", fontSize: "13px"}}>{DateUtils.getFormatTime(item.time)}</span>
                   </Link>}
                 description={item.label}
               />
@@ -50,7 +56,7 @@ class ArticleList extends Component {
           )}
         />
         <Row type="flex" justify="center">
-          <Pagination total={this.props.total} onChange={this.onPageChange}/>
+          <Pagination current={this.state.current} total={this.props.total} onChange={this.onPageChange}/>
         </Row>
       </div>
     )

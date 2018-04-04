@@ -72,7 +72,7 @@ class Home extends Component {
             </Row>
           </Header>
           <Row type="flex" justify="center">
-            <Col md={12} sm={20} xs={23}>
+            <Col lg={12} md={15} sm={20} xs={23}>
               <Content>
                 <MyBreadcrumb />
                 <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
