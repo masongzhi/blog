@@ -19,7 +19,7 @@ FROM nginx:latest
 WORKDIR /app
 
 COPY --from=clientBuild /app/build/ /usr/share/nginx/html/
-COPY --from=clientBuild /app/docker/nginx.conf /etc/nginx/nginx.conf
-COPY --from=clientBuild /app/docker/mime.types /etc/nginx/mime.types
+COPY --from=clientBuild /app/nginx/nginx.conf /etc/nginx/nginx.conf
+COPY --from=clientBuild /app/nginx/mime.types /etc/nginx/mime.types
 
 EXPOSE 9010
