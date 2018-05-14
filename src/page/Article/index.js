@@ -1,7 +1,9 @@
 import {fetchArticle} from "../../Api";
 import {message} from "antd/lib/index";
 import React, { Component } from 'react';
-const ReactMarkdown = require('react-markdown')
+import ReactMarkdown from 'react-markdown';
+import {addArticleLVC} from '../../Api'
+import { Button, Row } from 'antd';
 
 class Article extends Component {
   state = {
@@ -20,13 +22,28 @@ class Article extends Component {
     })
   };
 
-  componentDidMount = () => {
-    this.fetchArticle()
+  addArticleLVC = async (type) => {
+    await addArticleLVC({
+      body: {
+        id: this.props.match.params.id,
+        type
+      }
+    })
+  }
+
+  componentDidMount = async () => {
+    await Promise.all([
+      this.fetchArticle(),
+      await this.addArticleLVC('views')
+    ])
   };
   render() {
     return(
       <div>
-        <h2>{this.state.title}</h2>
+        <Row type="flex" justify="space-between">
+          <h2>{this.state.title}</h2>
+          <Button shape="circle" icon="edit"/>
+        </Row>
         <ReactMarkdown source={this.state.content} />
       </div>
     )

@@ -1,7 +1,22 @@
-#### 个人blog前端
+# 个人blog前端（personal blog font-end）
 使用create_react_app构建，配合ant-design使用
 
-dev命令
-`npm start`
-build命令
-`npm build`
+this appliation install by create-react-app with react-app-rewired (ant-design)
+
+# installation
+```bash
+# install
+npm install
+
+# development
+npm start
+
+# build
+npm run build
+
+# push docker image
+make prod
+
+##### docker deploy
+docker run --name blog -d -p 9010:9010 masongzhi/blog:prod
+```

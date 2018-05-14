@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { List, Avatar, Icon, Pagination, Row } from 'antd';
 import {Link} from "react-router-dom";
-import ReactMarkdown from 'react-markdown';
-import * as DateUtils from '../../utils/dateUtils';
+import Truncate from 'react-truncate';
+import {getFormatTime} from '../../utils/dateUtils';
+import {addArticleLVC, subArticleLVC} from '../../Api'
+import './list.less'
 
-const IconText = ({ type, text }) => (
-  <span>
-    <Icon type={type} style={{ marginRight: 8 }} />
+const IconText = ({ type, text, onClick }) => (
+  <span  onClick={onClick}>
+    <Icon type={type} style={{ marginRight: 8 }}/>
     {text}
   </span>
 );
@@ -24,6 +26,33 @@ class ArticleList extends Component {
     window.scrollTo(0, 0);
   }
 
+  setArticleLVC = async (item, type) => {
+    if (!this.state["like" + item.id]) {
+      await addArticleLVC({
+        body: {
+          id: item.id,
+          type
+        }
+      })
+      this.props.addLikes(item.id)
+    } else {
+      await subArticleLVC({
+        body: {
+          id: item.id,
+          type
+        }
+      })
+      this.props.subLikes(item.id)
+    }
+    this.setState({["like" + item.id]: !this.state["like" + item.id]})
+  }
+
+  componentDidMount () {
+    this.props.article.forEach(item => {
+      this.setState({["like" + item.id]: false})
+    })
+  }
+
   render() {
     return(
       <div>
@@ -34,23 +63,28 @@ class ArticleList extends Component {
           renderItem={item => (
             <List.Item
               key={item.id}
-              actions={[<IconText type="star-o" text="156"/>, <IconText type="like-o" text="156"/>,
-                <IconText type="message" text="2"/>]}
+              actions={[<IconText type="eye-o" text={item.views}/>, <IconText type={this.state["like" + item.id] ? "like" : "like-o"} onClick={(e) => this.setArticleLVC(item, 'likes')} text={item.likes}/>,
+                <IconText type="message" text="0"/>]}
             >
               <List.Item.Meta
                 avatar={<Avatar src={item.avatar}/>}
                 title={
-                  <Link to={{
-                    pathname: `article/${item.id}`,
-                    id: item.id
-                  }}>
-                    {item.title}
-                    <span style={{color: "#969696", paddingLeft: "10px", fontSize: "13px"}}>{DateUtils.getFormatTime(item.time)}</span>
-                  </Link>}
+                  <div>
+                    <span className="list-time">{getFormatTime(item.time)}</span>
+                    <Link to={{
+                      pathname: `article/${item.id}`,
+                      id: item.id
+                    }}>
+                      <h3 className="list-title">{item.title}</h3>
+                    </Link>
+                  </div>
+                }
                 description={item.label}
               />
-              <div style={{position: "relative", maxHeight: "40vh", overflow: "hidden"}}>
-                <ReactMarkdown source={item.content}/>
+              <div>
+                <Truncate lines={3}>
+                  {item.summary}
+                </Truncate>
               </div>
             </List.Item>
           )}
@@ -62,4 +96,5 @@ class ArticleList extends Component {
     )
   }
 }
+
 export default ArticleList;

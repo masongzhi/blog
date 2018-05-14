@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactMde  from 'react-mde';
 import 'react-mde/lib/styles/css/react-mde-all.css';
-import { Button, Input, Row, message } from 'antd';
+import { Button, message } from 'antd';
 import {saveArticle} from '../../Api'
 
 class Write extends Component {
@@ -9,7 +9,8 @@ class Write extends Component {
     super(props);
     this.state = {
       reactMdeValue: {text: '', selection: null},
-      title: null
+      title: '',
+      content: ''
     };
   }
 
@@ -36,9 +37,6 @@ class Write extends Component {
   render() {
     return (
       <div className="container">
-        <Row style={{marginBottom: '10px'}}>
-          <Input placeholder="标题" value={this.state.title} onChange={this.handleTitleValChange}/>
-        </Row>
         <ReactMde
           textAreaProps={{
             id: 'ta1',
