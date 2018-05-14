@@ -42,7 +42,7 @@ class Article extends Component {
       <div>
         <Row type="flex" justify="space-between">
           <h2>{this.state.title}</h2>
-          <Button shape="circle" icon="edit"/>
+          {/*<Button shape="circle" icon="edit"/>*/}
         </Row>
         <ReactMarkdown source={this.state.content} />
       </div>
