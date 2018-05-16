@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {BrowserRouter as Router, Route, Link, Switch, Redirect} from "react-router-dom";
 import './index.less';
 
-import {Layout, Menu, Icon, Row, Col, Button} from 'antd';
+import {Layout, Menu, Row, Col} from 'antd';
 import ArticleList from '../List';
 import Article from '../Article';
 import Write from '../Write';
@@ -16,22 +16,25 @@ class Home extends Component {
   state = {
     collapsed: false,
     article: [],
-    total: 0
+    total: 0,
+    current: 1
   };
 
   onCollapse = (collapsed) => {
     this.setState({collapsed});
   }
 
-  fetchArticles = (page, pageSize) => {
-    fetchArticles({
-      query: {page, limit: pageSize}
-    }).then((respone) => {
-      this.setState({article: respone.docs});
-      this.setState({total: respone.total});
-    }).catch(error => {
-      message.error(error.message);
-    })
+  fetchArticles = async (page = 1, pageSize) => {
+    try {
+      this.setState({current: page})
+      const response = await fetchArticles({
+        query: {page, limit: pageSize}
+      })
+      this.setState({article: response.docs});
+      this.setState({total: response.total});
+    } catch (e) {
+      message.error(e.message);
+    }
   };
 
   addLikes (id) {
@@ -55,7 +58,11 @@ class Home extends Component {
           <Header>
             <div className="logo"/>
             <Row type="flex" justify="start">
-              <Col style={{color: "#fff"}}>MASONGZHI`s blog</Col>
+              <Col style={{color: "#fff"}}>
+                <Link to="/article">
+                  MASONGZHI`s blog
+                </Link>
+              </Col>
               <Col offset={2}>
                 <Menu
                   theme="dark"
@@ -68,7 +75,6 @@ class Home extends Component {
                       文章
                     </Link>
                   </Menu.Item>
-                  {/*<Menu.Item key="2">nav 2</Menu.Item>*/}
                 </Menu>
               </Col>
               {/*<Row type="flex" justify="end" style={{flex: 1}}>*/}
@@ -92,7 +98,7 @@ class Home extends Component {
                     <Redirect exact from='/' to='/article'/>
                     <Route path="/article/:id" component={Article}/>
                     <Route path="/article"
-                           component={() => <ArticleList article={this.state.article} total={this.state.total}
+                           component={() => <ArticleList article={this.state.article} total={this.state.total} current={this.state.current}
                                                          fetchArticles={this.fetchArticles} addLikes={this.addLikes} subLikes={this.subLikes}/>}/>
                     <Route path="/write" component={Write}/>
                   </Switch>

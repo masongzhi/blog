@@ -16,13 +16,10 @@ const IconText = ({ type, text, onClick }) => (
 class ArticleList extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      current: 1
-    }
+    this.state = {}
   }
-  onPageChange = (page, pageSize) => {
-    this.setState({current: page})
-    this.props.fetchArticles(page, pageSize)
+  onPageChange = async (page, pageSize) => {
+    await this.props.fetchArticles(page, pageSize)
     window.scrollTo(0, 0);
   }
 
@@ -90,7 +87,7 @@ class ArticleList extends Component {
           )}
         />
         <Row type="flex" justify="center">
-          <Pagination current={this.state.current} total={this.props.total} onChange={this.onPageChange}/>
+          <Pagination current={this.props.current} total={this.props.total} onChange={this.onPageChange}/>
         </Row>
       </div>
     )

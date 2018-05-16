@@ -3,7 +3,7 @@ import {message} from "antd/lib/index";
 import React, { Component } from 'react';
 import ReactMarkdown from 'react-markdown';
 import {addArticleLVC} from '../../Api'
-import { Button, Row } from 'antd';
+import { Row } from 'antd';
 
 class Article extends Component {
   state = {
@@ -14,9 +14,9 @@ class Article extends Component {
   fetchArticle = () => {
     fetchArticle({
       id: this.props.match.params.id
-    }).then((respone) => {
-      this.setState({title: respone.title});
-      this.setState({content: respone.content});
+    }).then((response) => {
+      this.setState({title: response.title});
+      this.setState({content: response.content});
     }).catch(error => {
       message.error(error.message);
     })
