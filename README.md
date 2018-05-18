@@ -18,5 +18,5 @@ npm run build
 make prod
 
 ##### docker deploy
-docker run --name blog -d -p 9010:9010 masongzhi/blog:prod
+docker run --name blog -d masongzhi/blog:prod
 ```
