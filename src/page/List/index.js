@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { List, Avatar, Icon, Pagination, Row } from 'antd';
-import {Link} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import Truncate from 'react-truncate';
 import {getFormatTime} from '../../utils/dateUtils';
 import {addArticleLVC, subArticleLVC} from '../../Api'
@@ -14,7 +14,7 @@ const IconText = ({ type, text, onClick }) => (
 );
 
 class ArticleList extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.state = {}
   }
@@ -94,4 +94,4 @@ class ArticleList extends Component {
   }
 }
 
-export default ArticleList;
+export default withRouter(ArticleList);

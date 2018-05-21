@@ -47,7 +47,7 @@ class Home extends Component {
     --one.likes
   }
 
-  componentDidMount = () => {
+  componentDidMount () {
     this.fetchArticles()
   };
 
@@ -98,8 +98,10 @@ class Home extends Component {
                     <Redirect exact from='/' to='/article'/>
                     <Route path="/article/:id" component={Article}/>
                     <Route path="/article"
-                           component={() => <ArticleList article={this.state.article} total={this.state.total} current={this.state.current}
-                                                         fetchArticles={this.fetchArticles} addLikes={this.addLikes} subLikes={this.subLikes}/>}/>
+                           component={() => <ArticleList article={this.state.article} total={this.state.total}
+                                                         current={this.state.current}
+                                                         fetchArticles={this.fetchArticles} addLikes={this.addLikes}
+                                                         subLikes={this.subLikes}/>}/>
                     <Route path="/write" component={Write}/>
                   </Switch>
                 </div>
