@@ -6,7 +6,7 @@ import {Layout, Menu, Row, Col} from 'antd';
 import ArticleList from '../List';
 import Article from '../Article';
 import Write from '../Write';
-import MyBreadcrumb from '../../Component/MyBreadcrumb'
+import MyBreadcrumb from '../../component/MyBreadcrumb'
 import {fetchArticles} from "../../Api";
 import {message} from "antd/lib/index";
 
