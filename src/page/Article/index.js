@@ -1,15 +1,25 @@
 import {fetchArticle} from "../../Api";
 import {message} from "antd/lib/index";
 import React, { Component } from 'react';
-import ReactMarkdown from 'react-markdown';
 import {addArticleLVC} from '../../Api'
 import { Row } from 'antd';
+import * as Showdown from 'showdown';
+import 'react-mde/lib/styles/css/react-mde-all.css';
 
 class Article extends Component {
-  state = {
-    title: '',
-    content: ''
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      title: '',
+      content: ''
+    };
+    this.converter = new Showdown.Converter({
+      tables: true,
+      simplifiedAutoLink: true,
+      strikethrough: true,
+      tasklists: true,
+    });
+  }
 
   fetchArticle = () => {
     fetchArticle({
@@ -44,7 +54,7 @@ class Article extends Component {
           <h2>{this.state.title}</h2>
           {/*<Button shape="circle" icon="edit"/>*/}
         </Row>
-        <ReactMarkdown source={this.state.content} />
+        <div dangerouslySetInnerHTML={{__html: this.converter.makeHtml(this.state.content)}} />
       </div>
     )
   }

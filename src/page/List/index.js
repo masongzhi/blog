@@ -5,6 +5,8 @@ import Truncate from 'react-truncate';
 import {getFormatTime} from '../../utils/dateUtils';
 import {addArticleLVC, subArticleLVC} from '../../Api'
 import './list.less'
+import * as Showdown from 'showdown';
+import 'react-mde/lib/styles/css/react-mde-all.css';
 
 const IconText = ({ type, text, onClick }) => (
   <span  onClick={onClick}>
@@ -17,6 +19,12 @@ class ArticleList extends Component {
   constructor (props) {
     super(props);
     this.state = {}
+    this.converter = new Showdown.Converter({
+      tables: true,
+      simplifiedAutoLink: true,
+      strikethrough: true,
+      tasklists: true,
+    });
   }
   onPageChange = async (page, pageSize) => {
     await this.props.fetchArticles(page, pageSize)
@@ -80,7 +88,7 @@ class ArticleList extends Component {
               />
               <div>
                 <Truncate lines={3}>
-                  {item.summary}
+                  <div dangerouslySetInnerHTML={{__html: this.converter.makeHtml(item.summary)}} />
                 </Truncate>
               </div>
             </List.Item>
