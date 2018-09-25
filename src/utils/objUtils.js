@@ -1,10 +1,10 @@
-import isNil from 'lodash/isNil'
+import isNil from "lodash/isNil";
 export function enrichObj(obj) {
-  let result = {}
+  let result = {};
   for (let key in obj) {
     if (!isNil(obj[key])) {
-      result[key] = obj[key]
+      result[key] = obj[key];
     }
   }
-  return result
+  return result;
 }

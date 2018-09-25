@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import {Link, withRouter} from "react-router-dom";
+import React, { Component } from "react";
+import { Link, withRouter } from "react-router-dom";
 
-import {Breadcrumb} from 'antd';
+import { Breadcrumb } from "antd";
 
 // const breadcrumbNameMap = {
 //   '/article/:id': 'id',
@@ -9,15 +9,15 @@ import {Breadcrumb} from 'antd';
 //   '/write': 'write'
 // };
 class MyBreadcrumb extends Component {
-  render () {
-    const {location} = this.props;
-    const pathSnippets = location.pathname.split('/').filter(i => i);
+  render() {
+    const { location } = this.props;
+    const pathSnippets = location.pathname.split("/").filter(i => i);
     const length = pathSnippets.length;
     const extraBreadcrumbItems = pathSnippets.map((_, index) => {
-      const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
+      const url = `/${pathSnippets.slice(0, index + 1).join("/")}`;
       return (
         <Breadcrumb.Item key={url}>
-          {index !== (length - 1) ? (
+          {index !== length - 1 ? (
             <Link to={url}>{pathSnippets[index]}</Link>
           ) : (
             pathSnippets[index]
@@ -25,16 +25,14 @@ class MyBreadcrumb extends Component {
         </Breadcrumb.Item>
       );
     });
-    const breadcrumbItems = [(
+    const breadcrumbItems = [
       <Breadcrumb.Item key="home">
-        <Link to="/" >Home</Link>
+        <Link to="/">Home</Link>
       </Breadcrumb.Item>
-    )].concat(extraBreadcrumbItems);
+    ].concat(extraBreadcrumbItems);
     return (
-      <Breadcrumb style={{margin: '16px 0'}}>
-        {breadcrumbItems}
-      </Breadcrumb>
-    )
+      <Breadcrumb style={{ margin: "16px 0" }}>{breadcrumbItems}</Breadcrumb>
+    );
   }
 }
 
