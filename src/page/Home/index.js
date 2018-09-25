@@ -11,7 +11,7 @@ import {
 import "./index.less";
 import Loadable from "react-loadable";
 
-import { Layout, Menu, Row, Col } from "antd";
+import { Layout, Menu, Row, Col, BackTop, Button } from "antd";
 import Loading from "../../component/Loading";
 const ArticleList = Loadable({
   loader: () => import("../List"),
@@ -29,6 +29,10 @@ const MyBreadcrumb = Loadable({
   loader: () => import("../../component/MyBreadcrumb"),
   loading: Loading
 });
+const Login = Loadable({
+  loader: () => import("../../component/Login"),
+  loading: Loading
+});
 import { fetchArticles } from "../../Api";
 import { message } from "antd/lib/index";
 
@@ -39,9 +43,29 @@ class Home extends Component {
     collapsed: false,
     article: [],
     total: 0,
-    current: 1
+    current: 1,
+    visible: false
   };
 
+  // login组件用
+  showModal = () => {
+    this.setState({
+      visible: true
+    });
+  };
+  handleOk = e => {
+    console.log(e);
+    this.setState({
+      visible: false
+    });
+    // TODO 请求登录接口
+  };
+  handleCancel = e => {
+    console.log(e);
+    this.setState({
+      visible: false
+    });
+  };
   onCollapse = collapsed => {
     this.setState({ collapsed });
   };
@@ -79,21 +103,28 @@ class Home extends Component {
         <Layout className="layout">
           <Header>
             <div className="logo" />
-            <Row type="flex" justify="start">
-              <Col style={{ color: "#fff" }}>
-                <Link to="/article">MASONGZHI`s blog</Link>
-              </Col>
-              <Col offset={2}>
-                <Menu
-                  theme="dark"
-                  mode="horizontal"
-                  defaultSelectedKeys={["1"]}
-                  style={{ lineHeight: "64px" }}
-                >
-                  <Menu.Item key="1">
-                    <Link to="/article">文章</Link>
-                  </Menu.Item>
-                </Menu>
+            <Row type="flex" justify="space-between" style={{ color: "#fff" }}>
+              <Row type="flex" style={{ flex: 1 }}>
+                <Col>
+                  <Link to="/article">MASONGZHI`s blog</Link>
+                </Col>
+                <Col offset={2}>
+                  <Menu
+                    theme="dark"
+                    mode="horizontal"
+                    defaultSelectedKeys={["1"]}
+                    style={{ lineHeight: "64px" }}
+                  >
+                    <Menu.Item key="1">
+                      <Link to="/article">文章</Link>
+                    </Menu.Item>
+                  </Menu>
+                </Col>
+              </Row>
+              <Col>
+                <Button onClick={this.showModal} ghost>
+                  登录
+                </Button>
               </Col>
               {/*<Row type="flex" justify="end" style={{flex: 1}}>*/}
               {/*<Col style={{ color: "#fff" }}>*/}
@@ -108,7 +139,8 @@ class Home extends Component {
             </Row>
           </Header>
           <Row type="flex" justify="center">
-            <Col lg={12} md={15} sm={20} xs={23}>
+            <Col lg={13} md={15} sm={20} xs={23}>
+              <BackTop />
               <Content>
                 <MyBreadcrumb />
                 <div
@@ -139,6 +171,12 @@ class Home extends Component {
           <Footer style={{ textAlign: "center" }}>
             Ant Design ©2016 Created by Ant UED
           </Footer>
+          <Login
+            visible={this.state.visible}
+            showModal={this.showModal}
+            handleOk={this.handleOk}
+            handleCancel={this.handleCancel}
+          />
         </Layout>
       </Router>
     );
