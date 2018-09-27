@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Form, Input, Tooltip, Icon, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
+import { Form, Input, Tooltip, Icon, Button } from 'antd';
 
 const FormItem = Form.Item;
-const Option = Select.Option;
 
 class RegistrationForm extends Component {
   state = {
@@ -55,26 +54,6 @@ class RegistrationForm extends Component {
         sm: { span: 16 },
       },
     };
-    const tailFormItemLayout = {
-      wrapperCol: {
-        xs: {
-          span: 24,
-          offset: 0,
-        },
-        sm: {
-          span: 16,
-          offset: 8,
-        },
-      },
-    };
-    // const prefixSelector = getFieldDecorator('prefix', {
-    //   initialValue: '86',
-    // })(
-    //   <Select style={{ width: 70 }}>
-    //     <Option value="86">+86</Option>
-    //     <Option value="87">+87</Option>
-    //   </Select>
-    // );
 
     return (
       <Form onSubmit={this.handleSubmit}>
@@ -133,34 +112,6 @@ class RegistrationForm extends Component {
             ],
           })(<Input type="password" onBlur={this.handleConfirmBlur} />)}
         </FormItem>
-        {/*<FormItem*/}
-        {/*{...formItemLayout}*/}
-        {/*label="Phone Number"*/}
-        {/*>*/}
-        {/*{getFieldDecorator('phone', {*/}
-        {/*rules: [{ required: true, message: 'Please input your phone number!' }],*/}
-        {/*})(*/}
-        {/*<Input addonBefore={prefixSelector} style={{ width: '100%' }} />*/}
-        {/*)}*/}
-        {/*</FormItem>*/}
-        {/*<FormItem*/}
-        {/*{...formItemLayout}*/}
-        {/*label="Captcha"*/}
-        {/*extra="We must make sure that your are a human."*/}
-        {/*>*/}
-        {/*<Row gutter={8}>*/}
-        {/*<Col span={12}>*/}
-        {/*{getFieldDecorator('captcha', {*/}
-        {/*rules: [{ required: true, message: 'Please input the captcha you got!' }],*/}
-        {/*})(*/}
-        {/*<Input />*/}
-        {/*)}*/}
-        {/*</Col>*/}
-        {/*<Col span={12}>*/}
-        {/*<Button>Get captcha</Button>*/}
-        {/*</Col>*/}
-        {/*</Row>*/}
-        {/*</FormItem>*/}
         <FormItem>
           <Button block type="primary" htmlType="submit">
             注 册

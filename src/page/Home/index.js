@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Link, Switch, Redirect } from 'react-ro
 import './index.less';
 import Loadable from 'react-loadable';
 
-import { Layout, Menu, Row, Col, BackTop, Button } from 'antd';
+import { Layout, Menu, Row, Col, BackTop, Button, Icon } from 'antd';
 import Loading from '../../components/Loading';
 const ArticleList = Loadable({
   loader: () => import('../List'),
@@ -29,6 +29,7 @@ const Login = Loadable({
 });
 import { fetchArticles, login, register } from '../../Api';
 import { message } from 'antd/lib/index';
+import { isPC } from '../../utils/device';
 
 const { Header, Content, Footer } = Layout;
 
@@ -40,6 +41,7 @@ class Home extends Component {
     current: 1,
     visible: false,
     user: null,
+    downVisible: false, // 移动端菜单显示
   };
 
   // login组件用
@@ -103,7 +105,53 @@ class Home extends Component {
     this.fetchArticles();
   }
 
+  toggleDownVisible = () => {
+    this.setState({ downVisible: !this.state.downVisible });
+  };
+
   render() {
+    const BaseMenu = (
+      <Menu
+        theme="dark"
+        mode="horizontal"
+        defaultSelectedKeys={['1']}
+        style={{ lineHeight: isPC && '64px' }}
+      >
+        <Menu.Item key="1">
+          <Link to="/article">文章</Link>
+        </Menu.Item>
+        {/*root账户登录后可以看到写作入口*/}
+        {this.state.user &&
+          this.state.user.role === 'root' && (
+            <Menu.Item key="2">
+              <Link to="/write">写作</Link>
+            </Menu.Item>
+          )}
+      </Menu>
+    );
+
+    const PCMenu = <Col offset={2}>{BaseMenu}</Col>;
+
+    const MobileMenu = () => {
+      return (
+        <div style={{ color: '#fff', backgroundColor: '#001529', padding: '0 20px' }}>
+          <div
+            className="mobileMenu"
+            style={{ display: this.state.downVisible ? 'block' : 'none' }}
+          >
+            {BaseMenu}
+          </div>
+          <div style={{ textAlign: 'center' }}>
+            <Icon
+              type={this.state.downVisible ? 'up' : 'down'}
+              theme="outlined"
+              onClick={this.toggleDownVisible}
+            />
+          </div>
+        </div>
+      );
+    };
+
     return (
       <Router>
         <Layout className="layout">
@@ -114,25 +162,7 @@ class Home extends Component {
                 <Col>
                   <Link to="/article">MASONGZHI`s blog</Link>
                 </Col>
-                <Col offset={2}>
-                  <Menu
-                    theme="dark"
-                    mode="horizontal"
-                    defaultSelectedKeys={['1']}
-                    style={{ lineHeight: '64px' }}
-                  >
-                    <Menu.Item key="1">
-                      <Link to="/article">文章</Link>
-                    </Menu.Item>
-                    {/*root账户登录后可以看到写作入口*/}
-                    {this.state.user &&
-                      this.state.user.role === 'root' && (
-                        <Menu.Item key="2">
-                          <Link to="/write">写作</Link>
-                        </Menu.Item>
-                      )}
-                  </Menu>
-                </Col>
+                {isPC && <PCMenu />}
               </Row>
               <Row>
                 {this.state.user ? (
@@ -143,18 +173,9 @@ class Home extends Component {
                   </Button>
                 )}
               </Row>
-              {/*<Row type="flex" justify="end" style={{flex: 1}}>*/}
-              {/*<Col style={{ color: "#fff" }}>*/}
-              {/*<Link to="/write">*/}
-              {/*<Button type="primary">*/}
-              {/*<Icon type="edit"/>*/}
-              {/*<span>写作区</span>*/}
-              {/*</Button>*/}
-              {/*</Link>*/}
-              {/*</Col>*/}
-              {/*</Row>*/}
             </Row>
           </Header>
+          {!isPC && <MobileMenu />}
           <Row type="flex" justify="center">
             <Col lg={13} md={15} sm={20} xs={23}>
               <BackTop />
