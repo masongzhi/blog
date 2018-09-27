@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Modal, Form, Icon, Input, Button, Checkbox, Row } from 'antd';
+import Register from './Register';
 
 const FormItem = Form.Item;
 
-class NormalLoginForm extends Component {
+class LoginForm extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -16,6 +17,7 @@ class NormalLoginForm extends Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
+    const { changeShowMode } = this.props;
 
     return (
       <Form onSubmit={this.handleSubmit} className="login-form">
@@ -50,28 +52,51 @@ class NormalLoginForm extends Component {
           {/*</a>*/}
           <Row>
             <Button block type="primary" htmlType="submit" className="login-form-button">
-              登录
+              登 录
             </Button>
           </Row>
-          {/*Or <a href="">register now!</a>*/}
+          Or <a onClick={() => changeShowMode('register')}>register now!</a>
         </FormItem>
       </Form>
     );
   }
 }
 
-const WrappedNormalLoginForm = Form.create()(NormalLoginForm);
+const WrappedLoginForm = Form.create()(LoginForm);
 
 export default class Login extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      showMode: 'login', // register: '注册', login: '登录'
+    };
   }
 
+  changeShowMode = val => {
+    this.setState({ showMode: val });
+  };
+
+  handleCancel = e => {
+    this.props.handleCancel(e);
+    this.setState({ showMode: 'login' });
+  };
+
   render() {
-    const { visible, handleOk, handleCancel } = this.props;
+    const { visible, login, register } = this.props;
+    const { showMode } = this.state;
     return (
-      <Modal title="登录" width={400} visible={visible} footer={null} onCancel={handleCancel}>
-        <WrappedNormalLoginForm handleOk={handleOk} />
+      <Modal
+        title={showMode === 'login' ? '登录' : '注册'}
+        width={showMode === 'login' ? 400 : 500}
+        visible={visible}
+        footer={null}
+        onCancel={this.handleCancel}
+      >
+        {showMode === 'login' ? (
+          <WrappedLoginForm handleOk={login} changeShowMode={this.changeShowMode} />
+        ) : (
+          <Register handleOk={register} changeShowMode={this.changeShowMode} />
+        )}
       </Modal>
     );
   }

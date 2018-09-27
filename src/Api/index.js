@@ -11,6 +11,11 @@ export function login(options) {
   return fetch('/public/login', options);
 }
 
+export function register(options) {
+  options.method = 'POST';
+  return fetch('/public/register', options);
+}
+
 export function fetchArticles(options) {
   return fetch('/public/article', options);
 }

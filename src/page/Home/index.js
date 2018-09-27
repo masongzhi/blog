@@ -6,7 +6,7 @@ import './index.less';
 import Loadable from 'react-loadable';
 
 import { Layout, Menu, Row, Col, BackTop, Button } from 'antd';
-import Loading from '../../component/Loading';
+import Loading from '../../components/Loading';
 const ArticleList = Loadable({
   loader: () => import('../List'),
   loading: Loading,
@@ -20,14 +20,14 @@ const Write = Loadable({
   loading: Loading,
 });
 const MyBreadcrumb = Loadable({
-  loader: () => import('../../component/MyBreadcrumb'),
+  loader: () => import('../../components/MyBreadcrumb'),
   loading: Loading,
 });
 const Login = Loadable({
-  loader: () => import('../../component/Login'),
+  loader: () => import('./components/Login'),
   loading: Loading,
 });
-import { fetchArticles, login } from '../../Api';
+import { fetchArticles, login, register } from '../../Api';
 import { message } from 'antd/lib/index';
 
 const { Header, Content, Footer } = Layout;
@@ -48,9 +48,17 @@ class Home extends Component {
       visible: true,
     });
   };
-  handleOk = async form => {
-    console.log(form);
+  login = async form => {
     const res = await login({
+      body: form,
+    });
+    this.setState({
+      visible: false,
+      user: res.user,
+    });
+  };
+  register = async form => {
+    const res = await register({
       body: form,
     });
     this.setState({
@@ -116,12 +124,13 @@ class Home extends Component {
                     <Menu.Item key="1">
                       <Link to="/article">文章</Link>
                     </Menu.Item>
-                    {/*登录后可以看到写作入口*/}
-                    {this.state.user && (
-                      <Menu.Item key="2">
-                        <Link to="/write">写作</Link>
-                      </Menu.Item>
-                    )}
+                    {/*root账户登录后可以看到写作入口*/}
+                    {this.state.user &&
+                      this.state.user.role === 'root' && (
+                        <Menu.Item key="2">
+                          <Link to="/write">写作</Link>
+                        </Menu.Item>
+                      )}
                   </Menu>
                 </Col>
               </Row>
@@ -178,7 +187,8 @@ class Home extends Component {
           <Login
             visible={this.state.visible}
             showModal={this.showModal}
-            handleOk={this.handleOk}
+            login={this.login}
+            register={this.register}
             handleCancel={this.handleCancel}
           />
         </Layout>
