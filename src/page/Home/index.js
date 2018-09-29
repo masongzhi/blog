@@ -28,7 +28,7 @@ const Login = Loadable({
   loading: Loading,
 });
 import { fetchArticles, login, register } from '../../Api';
-import { message } from 'antd/lib/index';
+import { message } from 'antd';
 import { isPC } from '../../utils/device';
 
 const { Header, Content, Footer } = Layout;
@@ -130,27 +130,22 @@ class Home extends Component {
       </Menu>
     );
 
-    const PCMenu = <Col offset={2}>{BaseMenu}</Col>;
+    const PCMenu = () => <Col offset={2}>{BaseMenu}</Col>;
 
-    const MobileMenu = () => {
-      return (
-        <div style={{ color: '#fff', backgroundColor: '#001529', padding: '0 20px' }}>
-          <div
-            className="mobileMenu"
-            style={{ display: this.state.downVisible ? 'block' : 'none' }}
-          >
-            {BaseMenu}
-          </div>
-          <div style={{ textAlign: 'center' }}>
-            <Icon
-              type={this.state.downVisible ? 'up' : 'down'}
-              theme="outlined"
-              onClick={this.toggleDownVisible}
-            />
-          </div>
+    const MobileMenu = () => (
+      <div style={{ color: '#fff', backgroundColor: '#001529', padding: '0 20px' }}>
+        <div className="mobileMenu" style={{ display: this.state.downVisible ? 'block' : 'none' }}>
+          {BaseMenu}
         </div>
-      );
-    };
+        <div style={{ textAlign: 'center' }}>
+          <Icon
+            type={this.state.downVisible ? 'up' : 'down'}
+            theme="outlined"
+            onClick={this.toggleDownVisible}
+          />
+        </div>
+      </div>
+    );
 
     return (
       <Router>

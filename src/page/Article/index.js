@@ -1,29 +1,29 @@
-import { fetchArticle } from "../../Api";
-import { message } from "antd/lib/index";
-import React, { Component } from "react";
-import { addArticleLVC } from "../../Api";
-import { Row } from "antd";
-import * as Showdown from "showdown";
-import "react-mde/lib/styles/css/react-mde-all.css";
+import { fetchArticle } from '../../Api';
+import { message } from 'antd';
+import React, { Component } from 'react';
+import { addArticleLVC } from '../../Api';
+import { Row } from 'antd';
+import * as Showdown from 'showdown';
+import 'react-mde/lib/styles/css/react-mde-all.css';
 
 class Article extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: "",
-      content: ""
+      title: '',
+      content: '',
     };
     this.converter = new Showdown.Converter({
       tables: true,
       simplifiedAutoLink: true,
       strikethrough: true,
-      tasklists: true
+      tasklists: true,
     });
   }
 
   fetchArticle = () => {
     fetchArticle({
-      id: this.props.match.params.id
+      id: this.props.match.params.id,
     })
       .then(response => {
         this.setState({ title: response.title });
@@ -38,13 +38,13 @@ class Article extends Component {
     await addArticleLVC({
       body: {
         id: this.props.match.params.id,
-        type
-      }
+        type,
+      },
     });
   };
 
   componentDidMount = async () => {
-    await Promise.all([this.fetchArticle(), await this.addArticleLVC("views")]);
+    await Promise.all([this.fetchArticle(), await this.addArticleLVC('views')]);
   };
   render() {
     return (
@@ -55,7 +55,7 @@ class Article extends Component {
         </Row>
         <div
           dangerouslySetInnerHTML={{
-            __html: this.converter.makeHtml(this.state.content)
+            __html: this.converter.makeHtml(this.state.content),
           }}
         />
       </div>
