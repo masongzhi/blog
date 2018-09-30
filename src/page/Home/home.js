@@ -150,7 +150,7 @@ class Home extends Component {
                   <Switch>
                     <Redirect exact from="/" to="/article" />
                     <Route path="/article/:id" component={Article} />
-                    <Route path="/article" component={() => <ArticleList />} />
+                    <Route path="/article" component={ArticleList} />
                     <Route path="/write" component={Write} />
                   </Switch>
                 </div>
