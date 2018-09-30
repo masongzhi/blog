@@ -1,4 +1,4 @@
-import isNil from "lodash/isNil";
+import isNil from 'lodash/isNil';
 export function enrichObj(obj) {
   let result = {};
   for (let key in obj) {

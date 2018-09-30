@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import { List, Avatar, Icon, Pagination, Row } from "antd";
-import { Link, withRouter } from "react-router-dom";
-import Truncate from "react-truncate";
-import { getFormatTime } from "../../utils/dateUtils";
-import { addArticleLVC, subArticleLVC } from "../../Api";
-import "./list.less";
-import * as Showdown from "showdown";
-import "react-mde/lib/styles/css/react-mde-all.css";
+import React, { Component } from 'react';
+import { List, Avatar, Icon, Pagination, Row } from 'antd';
+import { Link, withRouter } from 'react-router-dom';
+import Truncate from 'react-truncate';
+import { getFormatTime } from '../../utils/dateUtils';
+import { addArticleLVC, subArticleLVC } from '../../api';
+import './list.less';
+import * as Showdown from 'showdown';
+import 'react-mde/lib/styles/css/react-mde-all.css';
 
 const IconText = ({ type, text, onClick }) => (
   <span onClick={onClick}>
@@ -23,7 +23,7 @@ class ArticleList extends Component {
       tables: true,
       simplifiedAutoLink: true,
       strikethrough: true,
-      tasklists: true
+      tasklists: true,
     });
   }
   onPageChange = async (page, pageSize) => {
@@ -32,29 +32,29 @@ class ArticleList extends Component {
   };
 
   setArticleLVC = async (item, type) => {
-    if (!this.state["like" + item.id]) {
+    if (!this.state['like' + item.id]) {
       await addArticleLVC({
         body: {
           id: item.id,
-          type
-        }
+          type,
+        },
       });
       this.props.addLikes(item.id);
     } else {
       await subArticleLVC({
         body: {
           id: item.id,
-          type
-        }
+          type,
+        },
       });
       this.props.subLikes(item.id);
     }
-    this.setState({ ["like" + item.id]: !this.state["like" + item.id] });
+    this.setState({ ['like' + item.id]: !this.state['like' + item.id] });
   };
 
   componentDidMount() {
     this.props.article.forEach(item => {
-      this.setState({ ["like" + item.id]: false });
+      this.setState({ ['like' + item.id]: false });
     });
   }
 
@@ -71,24 +71,22 @@ class ArticleList extends Component {
               actions={[
                 <IconText type="eye-o" text={item.views} />,
                 <IconText
-                  type={this.state["like" + item.id] ? "like" : "like-o"}
-                  onClick={e => this.setArticleLVC(item, "likes")}
+                  type={this.state['like' + item.id] ? 'like' : 'like-o'}
+                  onClick={e => this.setArticleLVC(item, 'likes')}
                   text={item.likes}
                 />,
-                <IconText type="message" text="0" />
+                <IconText type="message" text="0" />,
               ]}
             >
               <List.Item.Meta
                 avatar={<Avatar src={item.avatar} />}
                 title={
                   <div>
-                    <span className="list-time">
-                      {getFormatTime(item.time)}
-                    </span>
+                    <span className="list-time">{getFormatTime(item.time)}</span>
                     <Link
                       to={{
                         pathname: `article/${item.id}`,
-                        id: item.id
+                        id: item.id,
                       }}
                     >
                       <h3 className="list-title">{item.title}</h3>
@@ -101,7 +99,7 @@ class ArticleList extends Component {
                 <Truncate lines={3}>
                   <div
                     dangerouslySetInnerHTML={{
-                      __html: this.converter.makeHtml(item.summary)
+                      __html: this.converter.makeHtml(item.summary),
                     }}
                   />
                 </Truncate>

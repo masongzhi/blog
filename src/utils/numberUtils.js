@@ -1,6 +1,6 @@
-import floor from "lodash/floor";
-import isNil from "lodash/isNil";
-import Const from "../const";
+import floor from 'lodash/floor';
+import isNil from 'lodash/isNil';
+import Const from '../const';
 
 export function fixedFloat(number, byte = 2) {
   if (!number) {
@@ -38,25 +38,22 @@ export function toPercent(number) {
     return number;
   }
 
-  return cutFloat(number * 100) + "%";
+  return cutFloat(number * 100) + '%';
 }
 
-export function thousandBitSeparator(
-  number,
-  { digits = 2, symbol = ",", force = false } = {}
-) {
+export function thousandBitSeparator(number, { digits = 2, symbol = ',', force = false } = {}) {
   if ((number && isNil(number)) || !number) {
     return number;
   }
   number = cutFloat(number, digits);
-  const arr = number.toString().split(".");
-  arr[0] = arr[0].replace(/(\d)(?=(?:\d{3})+$)/g, "$1" + symbol);
+  const arr = number.toString().split('.');
+  arr[0] = arr[0].replace(/(\d)(?=(?:\d{3})+$)/g, '$1' + symbol);
   if (force && arr[1]) {
-    arr[1] = Number("0." + arr[1])
+    arr[1] = Number('0.' + arr[1])
       .toFixed(2)
-      .split(".")[1];
+      .split('.')[1];
   }
-  return arr.join(".");
+  return arr.join('.');
 }
 
 export function nullToZero(number) {
@@ -77,18 +74,18 @@ export function removeSensitive(item) {
   let shortPat = /(\D{1})\D*(\D{1})/;
   // 两个字的名字
   if (res.length === 2) {
-    res = res.replace(shortPat, "$1*");
+    res = res.replace(shortPat, '$1*');
     console.log(res.length);
   }
   // 三个字的名字
   if (res.length < 7 && res.length > 2) {
-    res = res.replace(shortPat, "$1*$2");
+    res = res.replace(shortPat, '$1*$2');
   }
   // 手机号、银行卡、身份证号
   if (res.length > 7) {
-    let mid = "";
+    let mid = '';
     for (var i = 0; i < res.length - 7; i++) {
-      mid += "*";
+      mid += '*';
     }
     res = res.replace(longPat, `$1${mid}$2`);
   }

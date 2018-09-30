@@ -1,7 +1,6 @@
-import { fetchArticle } from '../../Api';
+import { fetchArticle, addArticleLVC } from '../../api';
 import { message } from 'antd';
 import React, { Component } from 'react';
-import { addArticleLVC } from '../../Api';
 import { Row } from 'antd';
 import * as Showdown from 'showdown';
 import 'react-mde/lib/styles/css/react-mde-all.css';

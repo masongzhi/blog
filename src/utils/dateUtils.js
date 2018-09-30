@@ -1,12 +1,12 @@
-import moment from "moment";
+import moment from 'moment';
 
 function prefixZero(value) {
-  return +value >= 10 ? value : "0" + value;
+  return +value >= 10 ? value : '0' + value;
 }
 
-export function getFormatTime(dateTime, format = "YYYY-MM-DD HH:mm:ss") {
+export function getFormatTime(dateTime, format = 'YYYY-MM-DD HH:mm:ss') {
   if (!dateTime) {
-    return "";
+    return '';
   }
   return moment(dateTime).format(format);
 }
@@ -14,8 +14,8 @@ export function getFormatTime(dateTime, format = "YYYY-MM-DD HH:mm:ss") {
 /** * 拿到凌晨时间 * @param date * @returns {Date} */
 export function getDayStart(date = new Date(), days = 0) {
   return moment(date || new Date())
-    .startOf("day")
-    .add(days, "day")
+    .startOf('day')
+    .add(days, 'day')
     .toDate();
 }
 
@@ -27,8 +27,8 @@ export function getDayStart(date = new Date(), days = 0) {
  */
 export function getDateTimestamp(currentTime, day) {
   return getCurrentMoment(currentTime || new Date())
-    .add(day, "day")
-    .startOf("day")
+    .add(day, 'day')
+    .startOf('day')
     .valueOf();
 }
 
