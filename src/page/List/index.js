@@ -35,18 +35,14 @@ class ArticleList extends Component {
   };
 
   fetchArticles = async (page = 1, pageSize) => {
-    try {
-      this.setState({ current: page });
-      const response = await fetchArticles({
-        query: { page, limit: pageSize },
-      });
-      this.setState({
-        article: response.docs,
-        total: response.total,
-      });
-    } catch (e) {
-      message.error(e.message);
-    }
+    this.setState({ current: page });
+    const response = await fetchArticles({
+      query: { page, limit: pageSize },
+    });
+    this.setState({
+      article: response.docs,
+      total: response.total,
+    });
   };
 
   setArticleLVC = async (item, type) => {

@@ -19,19 +19,14 @@ class Article extends Component {
     });
   }
 
-  fetchArticle = () => {
-    fetchArticle({
+  fetchArticle = async () => {
+    const response = await fetchArticle({
       articleId: this.props.match.params.id,
-    })
-      .then(response => {
-        this.setState({
-          title: response.title,
-          content: response.content,
-        });
-      })
-      .catch(error => {
-        message.error(error.message);
-      });
+    });
+    this.setState({
+      title: response.title,
+      content: response.content,
+    });
   };
 
   componentDidMount = async () => {

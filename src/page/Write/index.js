@@ -29,20 +29,15 @@ class Write extends Component {
     const { value } = e.target;
     this.setState({ title: value });
   };
-  handleCommit = () => {
-    saveArticle({
+  handleCommit = async () => {
+    await saveArticle({
       body: {
         title: this.state.title,
         content: this.state.reactMdeValue.markdown,
       },
-    })
-      .then(respone => {
-        message.success('写入数据成功，即将跳转到文章列表');
-        setTimeout(() => this.props.history.push('/article'), 1000);
-      })
-      .catch(error => {
-        message.error(error.message);
-      });
+    });
+    message.success('写入数据成功，即将跳转到文章列表');
+    setTimeout(() => this.props.history.push('/article'), 1000);
   };
   render() {
     return (
