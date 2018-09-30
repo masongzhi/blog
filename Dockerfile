@@ -3,7 +3,9 @@ FROM node:alpine as clientBase
 WORKDIR /clientBase
 COPY ./package.json .
 COPY ./yarn.lock .
-RUN npm install -g yarn && yarn install
+RUN npm install -g yarn && \
+    yarn config set registry 'https://registry.npm.taobao.org' && \
+    yarn --network-timeout 100000 install
 
 FROM node:alpine as clientBuild
 WORKDIR /app
