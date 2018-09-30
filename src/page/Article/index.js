@@ -1,8 +1,8 @@
 import { fetchArticle } from '../../api';
 import React, { Component } from 'react';
-import { Row, message } from 'antd';
-import * as Showdown from 'showdown';
-import 'react-mde/lib/styles/css/react-mde-all.css';
+import { Row } from 'antd';
+import * as ReactMarkdown from 'react-markdown';
+import '../../markdown.css';
 
 class Article extends Component {
   constructor(props) {
@@ -11,12 +11,6 @@ class Article extends Component {
       title: '',
       content: '',
     };
-    this.converter = new Showdown.Converter({
-      tables: true,
-      simplifiedAutoLink: true,
-      strikethrough: true,
-      tasklists: true,
-    });
   }
 
   fetchArticle = async () => {
@@ -39,11 +33,7 @@ class Article extends Component {
           <h2>{this.state.title}</h2>
           {/*<Button shape="circle" icon="edit"/>*/}
         </Row>
-        <div
-          dangerouslySetInnerHTML={{
-            __html: this.converter.makeHtml(this.state.content),
-          }}
-        />
+        <ReactMarkdown className="markdown-body" source={this.state.content} />
       </div>
     );
   }

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { List, Avatar, Icon, Pagination, Row, message } from 'antd';
+import { List, Avatar, Icon, Pagination, Row } from 'antd';
 import { Link, withRouter } from 'react-router-dom';
 import Truncate from 'react-truncate';
 import { getFormatTime } from '../../utils/dateUtils';
 import { fetchArticles, addArticleLC, subArticleLC } from '../../api';
 import './list.less';
-import * as Showdown from 'showdown';
-import 'react-mde/lib/styles/css/react-mde-all.css';
+import '../../markdown.css';
+import * as ReactMarkdown from 'react-markdown';
 
 const IconText = ({ type, text, onClick }) => (
   <span onClick={onClick}>
@@ -21,13 +21,6 @@ class ArticleList extends Component {
     total: 0,
     current: 1,
   };
-
-  converter = new Showdown.Converter({
-    tables: true,
-    simplifiedAutoLink: true,
-    strikethrough: true,
-    tasklists: true,
-  });
 
   onPageChange = async (page, pageSize) => {
     await this.fetchArticles(page, pageSize);
@@ -119,15 +112,7 @@ class ArticleList extends Component {
                 }
                 description={item.label}
               />
-              <div>
-                <Truncate lines={3}>
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: this.converter.makeHtml(item.summary),
-                    }}
-                  />
-                </Truncate>
-              </div>
+              <ReactMarkdown className="markdown-body" source={item.summary} />
             </List.Item>
           )}
         />
