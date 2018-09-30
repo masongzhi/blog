@@ -1,7 +1,6 @@
-import { fetchArticle, addArticleLVC } from '../../api';
-import { message } from 'antd';
+import { fetchArticle } from '../../api';
 import React, { Component } from 'react';
-import { Row } from 'antd';
+import { Row, message } from 'antd';
 import * as Showdown from 'showdown';
 import 'react-mde/lib/styles/css/react-mde-all.css';
 
@@ -22,28 +21,21 @@ class Article extends Component {
 
   fetchArticle = () => {
     fetchArticle({
-      id: this.props.match.params.id,
+      articleId: this.props.match.params.id,
     })
       .then(response => {
-        this.setState({ title: response.title });
-        this.setState({ content: response.content });
+        this.setState({
+          title: response.title,
+          content: response.content,
+        });
       })
       .catch(error => {
         message.error(error.message);
       });
   };
 
-  addArticleLVC = async type => {
-    await addArticleLVC({
-      body: {
-        id: this.props.match.params.id,
-        type,
-      },
-    });
-  };
-
   componentDidMount = async () => {
-    await Promise.all([this.fetchArticle(), await this.addArticleLVC('views')]);
+    await this.fetchArticle();
   };
   render() {
     return (

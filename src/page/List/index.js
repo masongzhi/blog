@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { List, Avatar, Icon, Pagination, Row } from 'antd';
+import { List, Avatar, Icon, Pagination, Row, message } from 'antd';
 import { Link, withRouter } from 'react-router-dom';
 import Truncate from 'react-truncate';
 import { getFormatTime } from '../../utils/dateUtils';
-import { addArticleLVC, subArticleLVC } from '../../api';
+import { fetchArticles, addArticleLC, subArticleLC } from '../../api';
 import './list.less';
 import * as Showdown from 'showdown';
 import 'react-mde/lib/styles/css/react-mde-all.css';
@@ -16,44 +16,73 @@ const IconText = ({ type, text, onClick }) => (
 );
 
 class ArticleList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-    this.converter = new Showdown.Converter({
-      tables: true,
-      simplifiedAutoLink: true,
-      strikethrough: true,
-      tasklists: true,
-    });
-  }
+  state = {
+    article: [],
+    total: 0,
+    current: 1,
+  };
+
+  converter = new Showdown.Converter({
+    tables: true,
+    simplifiedAutoLink: true,
+    strikethrough: true,
+    tasklists: true,
+  });
+
   onPageChange = async (page, pageSize) => {
-    await this.props.fetchArticles(page, pageSize);
+    await this.fetchArticles(page, pageSize);
     window.scrollTo(0, 0);
+  };
+
+  fetchArticles = async (page = 1, pageSize) => {
+    try {
+      this.setState({ current: page });
+      const response = await fetchArticles({
+        query: { page, limit: pageSize },
+      });
+      this.setState({
+        article: response.docs,
+        total: response.total,
+      });
+    } catch (e) {
+      message.error(e.message);
+    }
   };
 
   setArticleLVC = async (item, type) => {
     if (!this.state['like' + item.id]) {
-      await addArticleLVC({
+      await addArticleLC({
         body: {
-          id: item.id,
+          articleId: item.id,
           type,
         },
       });
-      this.props.addLikes(item.id);
+      this.addLikes(item.id);
     } else {
-      await subArticleLVC({
+      await subArticleLC({
         body: {
-          id: item.id,
+          articleId: item.id,
           type,
         },
       });
-      this.props.subLikes(item.id);
+      this.subLikes(item.id);
     }
     this.setState({ ['like' + item.id]: !this.state['like' + item.id] });
   };
 
-  componentDidMount() {
-    this.props.article.forEach(item => {
+  addLikes(id) {
+    let one = this.state.article.find(item => item.id === id);
+    ++one.likes;
+  }
+
+  subLikes(id) {
+    let one = this.state.article.find(item => item.id === id);
+    --one.likes;
+  }
+
+  async componentDidMount() {
+    await this.fetchArticles();
+    this.state.article.forEach(item => {
       this.setState({ ['like' + item.id]: false });
     });
   }
@@ -64,12 +93,11 @@ class ArticleList extends Component {
         <List
           itemLayout="vertical"
           size="large"
-          dataSource={this.props.article}
+          dataSource={this.state.article}
           renderItem={item => (
             <List.Item
               key={item.id}
               actions={[
-                <IconText type="eye-o" text={item.views} />,
                 <IconText
                   type={this.state['like' + item.id] ? 'like' : 'like-o'}
                   onClick={e => this.setArticleLVC(item, 'likes')}
@@ -109,8 +137,8 @@ class ArticleList extends Component {
         />
         <Row type="flex" justify="center">
           <Pagination
-            current={this.props.current}
-            total={this.props.total}
+            current={this.state.current}
+            total={this.state.total}
             onChange={this.onPageChange}
           />
         </Row>

@@ -28,8 +28,7 @@ const Login = Loadable({
   loader: () => import('./components/Login'),
   loading: Loading,
 });
-import { fetchArticles, login, register } from '../../api';
-import { message } from 'antd';
+import { login, register } from '../../api';
 import { isPC } from '../../utils/device';
 
 const { Header, Content, Footer } = Layout;
@@ -37,9 +36,6 @@ const { Header, Content, Footer } = Layout;
 class Home extends Component {
   state = {
     collapsed: false,
-    article: [],
-    total: 0,
-    current: 1,
     visible: false,
     downVisible: false, // 移动端菜单显示
   };
@@ -77,33 +73,6 @@ class Home extends Component {
   onCollapse = collapsed => {
     this.setState({ collapsed });
   };
-
-  fetchArticles = async (page = 1, pageSize) => {
-    try {
-      this.setState({ current: page });
-      const response = await fetchArticles({
-        query: { page, limit: pageSize },
-      });
-      this.setState({ article: response.docs });
-      this.setState({ total: response.total });
-    } catch (e) {
-      message.error(e.message);
-    }
-  };
-
-  addLikes(id) {
-    let one = this.article.find(item => item.id === id);
-    ++one.likes;
-  }
-
-  subLikes(id) {
-    let one = this.article.find(item => item.id === id);
-    --one.likes;
-  }
-
-  componentDidMount() {
-    this.fetchArticles();
-  }
 
   toggleDownVisible = () => {
     this.setState({ downVisible: !this.state.downVisible });
@@ -181,19 +150,7 @@ class Home extends Component {
                   <Switch>
                     <Redirect exact from="/" to="/article" />
                     <Route path="/article/:id" component={Article} />
-                    <Route
-                      path="/article"
-                      component={() => (
-                        <ArticleList
-                          article={this.state.article}
-                          total={this.state.total}
-                          current={this.state.current}
-                          fetchArticles={this.fetchArticles}
-                          addLikes={this.addLikes}
-                          subLikes={this.subLikes}
-                        />
-                      )}
-                    />
+                    <Route path="/article" component={() => <ArticleList />} />
                     <Route path="/write" component={Write} />
                   </Switch>
                 </div>

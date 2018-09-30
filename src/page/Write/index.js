@@ -33,7 +33,6 @@ class Write extends Component {
     saveArticle({
       body: {
         title: this.state.title,
-        time: new Date().getTime(),
         content: this.state.reactMdeValue.markdown,
       },
     })

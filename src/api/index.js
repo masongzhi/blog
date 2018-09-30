@@ -1,11 +1,22 @@
 import fetch from './fetch';
 
-// Koala API
 export function saveArticle(options) {
   options.method = 'POST';
   return fetch('/article', options);
 }
 
+// 增加like comment接口
+export function addArticleLC(options) {
+  options.method = 'POST';
+  return fetch('/article/addLC', options);
+}
+
+export function subArticleLC(options) {
+  options.method = 'POST';
+  return fetch('/article/subLC', options);
+}
+
+// public 接口(无需登录状态)
 export function login(options) {
   options.method = 'POST';
   return fetch('/public/login', options);
@@ -21,16 +32,5 @@ export function fetchArticles(options) {
 }
 
 export function fetchArticle(options) {
-  return fetch(`/public/article/${options.id}`, options);
-}
-
-// 增加like view comment接口
-export function addArticleLVC(options) {
-  options.method = 'POST';
-  return fetch('/public/article/addLVC', options);
-}
-
-export function subArticleLVC(options) {
-  options.method = 'POST';
-  return fetch('/public/article/subLVC', options);
+  return fetch(`/public/article/${options.articleId}`, options);
 }
