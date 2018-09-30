@@ -2,7 +2,7 @@ import { fetchArticle } from '../../api';
 import React, { Component } from 'react';
 import { Row } from 'antd';
 import * as ReactMarkdown from 'react-markdown';
-import '../../markdown.css';
+import './markdown.css';
 
 class Article extends Component {
   constructor(props) {

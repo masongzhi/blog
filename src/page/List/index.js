@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { List, Avatar, Icon, Pagination, Row } from 'antd';
 import { Link, withRouter } from 'react-router-dom';
-import Truncate from 'react-truncate';
 import { getFormatTime } from '../../utils/dateUtils';
 import { fetchArticles, addArticleLC, subArticleLC } from '../../api';
 import './list.less';
-import '../../markdown.css';
 import * as ReactMarkdown from 'react-markdown';
 
 const IconText = ({ type, text, onClick }) => (
@@ -112,7 +110,8 @@ class ArticleList extends Component {
                 }
                 description={item.label}
               />
-              <ReactMarkdown className="markdown-body" source={item.summary} />
+              {/*不引入markdown.css，将ReactMarkdown的子元素都设为inline，并加省略率号*/}
+              <ReactMarkdown className="child-element-inline" source={item.summary} />
             </List.Item>
           )}
         />

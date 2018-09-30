@@ -9,3 +9,13 @@
     text-decoration: underline;
   }
 }
+
+.child-element-inline {
+  &:after {
+    display: inline-block;
+    content: '...';
+  }
+  * {
+    display: inline;
+  }
+}
