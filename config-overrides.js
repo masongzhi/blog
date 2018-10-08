@@ -1,5 +1,11 @@
 const { injectBabelPlugin } = require('react-app-rewired');
 const rewireLess = require('react-app-rewire-less');
+const path = require('path');
+
+function resolve(dir) {
+  return path.join(__dirname, '..', dir);
+}
+
 module.exports = function override(config, env) {
   config = rewireLess(config, env);
   config = injectBabelPlugin(
@@ -7,5 +13,10 @@ module.exports = function override(config, env) {
     config
   );
   config = injectBabelPlugin(['syntax-dynamic-import'], config);
+  config.resolve = {
+    alias: {
+      '@': resolve('src'),
+    },
+  };
   return config;
 };
