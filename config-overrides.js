@@ -7,16 +7,16 @@ function resolve(dir) {
 }
 
 module.exports = function override(config, env) {
+  config.resolve = {
+    alias: {
+      '@': resolve('src'),
+    },
+  };
   config = rewireLess(config, env);
   config = injectBabelPlugin(
     ['import', { libraryName: 'antd', libraryDirectory: 'es', style: 'css' }],
     config
   );
   config = injectBabelPlugin(['syntax-dynamic-import'], config);
-  config.resolve = {
-    alias: {
-      '@': resolve('src'),
-    },
-  };
   return config;
 };
