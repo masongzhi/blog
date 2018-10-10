@@ -138,6 +138,11 @@ class Home extends Component {
                   </Button>
                 )}
               </Row>
+              <Row type="flex" align="middle" style={{ fontSize: '23px', marginLeft: '20px' }}>
+                <a href="https://github.com/masongzhi" target="_blank">
+                  <Icon type="github" theme="outlined" />
+                </a>
+              </Row>
             </Row>
           </Header>
           {!isPC && <MobileMenu />}
