@@ -139,7 +139,7 @@ class Home extends Component {
                 )}
               </Row>
               <Row type="flex" align="middle" style={{ fontSize: '23px', marginLeft: '20px' }}>
-                <a href="https://github.com/masongzhi" target="_blank">
+                <a href="https://github.com/masongzhi" target="_blank" rel="noopener noreferrer">
                   <Icon type="github" theme="outlined" />
                 </a>
               </Row>

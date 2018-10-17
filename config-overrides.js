@@ -12,6 +12,10 @@ module.exports = function override(config, env) {
       '@': resolve('src'),
     },
   };
+  config.externals = {
+    react: 'React',
+    'react-dom': 'ReactDOM',
+  };
   config = rewireLess(config, env);
   config = injectBabelPlugin(
     ['import', { libraryName: 'antd', libraryDirectory: 'es', style: 'css' }],

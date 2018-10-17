@@ -1,8 +1,8 @@
 import moment from 'moment';
 
-function prefixZero(value) {
-  return +value >= 10 ? value : '0' + value;
-}
+// function prefixZero(value) {
+//   return +value >= 10 ? value : '0' + value;
+// }
 
 export function getFormatTime(dateTime, format = 'YYYY-MM-DD HH:mm:ss') {
   if (!dateTime) {
