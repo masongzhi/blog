@@ -36,7 +36,7 @@ export function fetchArticle(options) {
 }
 
 export function getComment(options) {
-  return fetch('/comment/get', options);
+  return fetch('/public/comment/get', options);
 }
 
 export function getCommentById(options, id) {
