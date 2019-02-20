@@ -111,7 +111,7 @@ class Home extends Component {
           <Icon
             type={this.state.downVisible ? 'up' : 'down'}
             theme="outlined"
-            onClick={this.toggleDownVisible}
+            onClick={this.toggleDownVisible.bind(this)}
           />
         </div>
       </div>
@@ -133,7 +133,7 @@ class Home extends Component {
                 {user ? (
                   <span>{user.username}</span>
                 ) : (
-                  <Button onClick={this.showModal} ghost>
+                  <Button onClick={this.showModal.bind(this)} ghost>
                     登录
                   </Button>
                 )}

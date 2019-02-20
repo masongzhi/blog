@@ -34,3 +34,21 @@ export function fetchArticles(options) {
 export function fetchArticle(options) {
   return fetch(`/public/article/${options.articleId}`, options);
 }
+
+export function getComment(options) {
+  return fetch('/comment/get', options);
+}
+
+export function getCommentById(options, id) {
+  return fetch(`/comment/get/${id}`, options);
+}
+
+export function addComment(options) {
+  options.method = 'POST';
+  return fetch('/comment/add', options);
+}
+
+export function replyComment(options) {
+  options.method = 'POST';
+  return fetch('/comment/reply', options);
+}

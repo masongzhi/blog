@@ -2,7 +2,7 @@
   "name": "my-blog",
   "version": "1.0.0-rc",
   "dependencies": {
-    "antd": "^3.9.3",
+    "antd": "^3.13.5",
     "draft-js": "^0.10.5",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.17.5",

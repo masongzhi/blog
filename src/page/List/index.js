@@ -87,7 +87,7 @@ class ArticleList extends Component {
               actions={[
                 <IconText
                   type={this.state['like' + item.id] ? 'like' : 'like-o'}
-                  onClick={e => this.setArticleLVC(item, 'likes')}
+                  onClick={e => this.setArticleLVC.call(this, item, 'likes')}
                   text={item.likes}
                 />,
                 <IconText type="message" text="0" />,

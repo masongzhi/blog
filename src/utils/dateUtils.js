@@ -42,3 +42,12 @@ export function getDateTimestamp(currentTime, day) {
 export function getCurrentMoment(time) {
   return moment(time);
 }
+
+/**
+ * 获取距离当前的时间差(5分钟前，1天前)
+ * @param time
+ * @returns {string}
+ */
+export function getTimeFromNow(time) {
+  return moment(time).fromNow();
+}

@@ -1,8 +1,9 @@
 import { fetchArticle } from '../../api';
 import React, { Component } from 'react';
-import { Row } from 'antd';
+import { Row, Divider } from 'antd';
 import * as ReactMarkdown from 'react-markdown';
 import './markdown.css';
+import Comment from './components/Comment';
 
 class Article extends Component {
   constructor(props) {
@@ -13,7 +14,7 @@ class Article extends Component {
     };
   }
 
-  fetchArticle = async () => {
+  async fetchArticle() {
     const response = await fetchArticle({
       articleId: this.props.match.params.id,
     });
@@ -21,11 +22,12 @@ class Article extends Component {
       title: response.title,
       content: response.content,
     });
-  };
+  }
 
-  componentDidMount = async () => {
+  async componentDidMount() {
     await this.fetchArticle();
-  };
+  }
+
   render() {
     return (
       <div>
@@ -34,6 +36,8 @@ class Article extends Component {
           {/*<Button shape="circle" icon="edit"/>*/}
         </Row>
         <ReactMarkdown className="markdown-body" source={this.state.content} />
+        <Divider orientation="left">评论</Divider>
+        <Comment articleId={this.props.match.params.id} />
       </div>
     );
   }
