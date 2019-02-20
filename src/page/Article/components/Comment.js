@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { getComment, addComment } from '../../../api/index';
 import NestComment from './NestComment';
 
-import { Input, Row, Col, Button } from 'antd';
+import { Input, Row, Col, Button, Empty } from 'antd';
 const { TextArea } = Input;
 
 const Reply = props => (
@@ -73,6 +73,7 @@ class CommentPart extends Component {
         {this.state.comments.map(comment => (
           <NestComment key={comment.id} comment={comment} Reply={Reply} />
         ))}
+        {this.state.comments.length === 0 && <Empty />}
         <Reply
           value={this.state.content}
           autosize={{ minRows: 2, maxRows: 6 }}
