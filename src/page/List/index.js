@@ -90,7 +90,7 @@ class ArticleList extends Component {
                   onClick={e => this.setArticleLVC.call(this, item, 'likes')}
                   text={item.likes}
                 />,
-                <IconText type="message" text="0" />,
+                <IconText type="message" text={item.comments} />,
               ]}
             >
               <List.Item.Meta
