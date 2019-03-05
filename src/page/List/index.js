@@ -94,7 +94,7 @@ class ArticleList extends Component {
               ]}
             >
               <List.Item.Meta
-                avatar={<Avatar src={item.avatar} />}
+                avatar={<Avatar src={item.author && item.author.avatar} />}
                 title={
                   <div>
                     <span className="list-time">{getFormatTime(item.time)}</span>
