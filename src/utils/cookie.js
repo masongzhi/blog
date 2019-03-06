@@ -48,7 +48,7 @@ export function getCookie(cname) {
 }
 
 export function GetCookieDomain() {
-  var host = location.hostname;
+  var host = document.location.hostname;
   var ip = /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/;
   if (ip.test(host) === true || host === 'localhost') return host;
   var regex = /([^]*).*/;

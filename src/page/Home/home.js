@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link, Switch, Redirect } from 'react-router-dom';
 import './index.less';
 import Loadable from 'react-loadable';
+import { getCookie } from '../../utils/cookie';
 
 import { Layout, Menu, Row, Col, BackTop, Button, Icon } from 'antd';
 // 按需加载
@@ -156,6 +157,7 @@ class Home extends Component {
                     <Redirect exact from="/" to="/article" />
                     <Route path="/article/:id" component={Article} />
                     <Route path="/article" component={ArticleList} />
+                    <Route path="/write/:articleId" component={Write} />
                     <Route path="/write" component={Write} />
                   </Switch>
                 </div>

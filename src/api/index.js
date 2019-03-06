@@ -5,6 +5,11 @@ export function saveArticle(options) {
   return fetch('/article', options);
 }
 
+export function updateArticle(options) {
+  options.method = 'PUT';
+  return fetch('/article', options);
+}
+
 // 增加like comment接口
 export function addArticleLC(options) {
   options.method = 'POST';
