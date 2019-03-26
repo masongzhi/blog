@@ -7,6 +7,8 @@ import './markdown.css';
 import Comment from './components/Comment';
 import { connect } from 'react-redux';
 
+import hljs from 'highlight.js/lib/highlight';
+
 const mapStateToProps = state => {
   return {
     user: state.user,
@@ -30,8 +32,15 @@ class Article extends Component {
     });
   }
 
+  updateHighlightBlock() {
+    document.querySelectorAll('pre code').forEach(block => {
+      hljs.highlightBlock(block);
+    });
+  }
+
   async componentDidMount() {
     await this.fetchArticle();
+    this.updateHighlightBlock();
   }
 
   render() {
@@ -54,7 +63,7 @@ class Article extends Component {
               </Link>
             )}
         </Row>
-        <ReactMarkdown className="markdown-body" source={article.content} />
+        <ReactMarkdown ref={this.codeNode} className="markdown-body" source={article.content} />
         <Divider orientation="left">评论</Divider>
         <Comment articleId={this.props.match.params.id} />
       </div>
