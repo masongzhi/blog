@@ -1,4 +1,4 @@
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 // function prefixZero(value) {
 //   return +value >= 10 ? value : '0' + value;
@@ -8,12 +8,12 @@ export function getFormatTime(dateTime, format = 'YYYY-MM-DD HH:mm:ss') {
   if (!dateTime) {
     return '';
   }
-  return moment(dateTime).format(format);
+  return dayjs(dateTime).format(format);
 }
 
 /** * 拿到凌晨时间 * @param date * @returns {Date} */
 export function getDayStart(date = new Date(), days = 0) {
-  return moment(date || new Date())
+  return dayjs(date || new Date())
     .startOf('day')
     .add(days, 'day')
     .toDate();
@@ -40,7 +40,7 @@ export function getDateTimestamp(currentTime, day) {
  * @return {Object} the Moment object
  */
 export function getCurrentMoment(time) {
-  return moment(time);
+  return dayjs(time);
 }
 
 /**
@@ -49,5 +49,5 @@ export function getCurrentMoment(time) {
  * @returns {string}
  */
 export function getTimeFromNow(time) {
-  return moment(time).fromNow();
+  return dayjs(time).fromNow();
 }

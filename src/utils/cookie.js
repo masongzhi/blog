@@ -2,7 +2,7 @@ export function setCookie(sKey, sValue, vEnd, sPath, sDomain, bSecure) {
   if (!sKey || /^(?:expires|max\-age|path|domain|secure)$/i.test(sKey)) {
     return false;
   }
-  var sExpires = '';
+  let sExpires = '';
   if (vEnd) {
     switch (vEnd.constructor) {
       case Number:
@@ -33,14 +33,14 @@ export function delCookie(sKey) {
 }
 
 export function getCookie(cname) {
-  var name = cname + '=';
-  var ca = document.cookie.split(';');
-  for (var i = 0; i < ca.length; i++) {
+  let name = cname + '=';
+  const ca = document.cookie.split(';');
+  for (let i = 0; i < ca.length; i++) {
     var limit = ca[i];
-    while (limit.charAt(0) == ' ') {
+    while (limit.charAt(0) === ' ') {
       limit = limit.substring(1);
     }
-    if (limit.indexOf(name) == 0) {
+    if (limit.indexOf(name) === 0) {
       return limit.substring(name.length, limit.length);
     }
   }
@@ -48,14 +48,14 @@ export function getCookie(cname) {
 }
 
 export function GetCookieDomain() {
-  var host = document.location.hostname;
-  var ip = /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/;
+  let host = document.location.hostname;
+  const ip = /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/;
   if (ip.test(host) === true || host === 'localhost') return host;
-  var regex = /([^]*).*/;
-  var match = host.match(regex);
+  const regex = /([^]*).*/;
+  const match = host.match(regex);
   if (typeof match !== 'undefined' && null !== match) host = match[1];
   if (typeof host !== 'undefined' && null !== host) {
-    var strAry = host.split('.');
+    const strAry = host.split('.');
     if (strAry.length > 1) {
       host = strAry[strAry.length - 2] + '.' + strAry[strAry.length - 1];
     }

@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link, Switch, Redirect } from 'react-router-dom';
 import './index.less';
 import Loadable from 'react-loadable';
-import { getCookie } from '../../utils/cookie';
+// import { getCookie } from '../../utils/cookie';
 
 import { Layout, Menu, Row, Col, BackTop, Button, Icon } from 'antd';
 // 按需加载

@@ -34,12 +34,14 @@ class Article extends Component {
 
   updateHighlightBlock() {
     document.querySelectorAll('pre code').forEach(block => {
+      console.log('block===>>>>', block);
       hljs.highlightBlock(block);
     });
   }
 
   async componentDidMount() {
     await this.fetchArticle();
+    console.log('1===>>>>', 1);
     this.updateHighlightBlock();
   }
 
@@ -63,7 +65,7 @@ class Article extends Component {
               </Link>
             )}
         </Row>
-        <ReactMarkdown ref={this.codeNode} className="markdown-body" source={article.content} />
+        <ReactMarkdown className="markdown-body" source={article.content} />
         <Divider orientation="left">评论</Divider>
         <Comment articleId={this.props.match.params.id} />
       </div>
