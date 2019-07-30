@@ -28,7 +28,7 @@
     "format": "prettier --write 'src/**/*.{js,jsx,less}'",
     "analysis": "ANALYSIS=1 yarn start"
   },
-  "proxy": "http://localhost:3002",
+  "proxy": "http://blog.masongzhi.cn",
   "devDependencies": {
     "babel-plugin-import": "^1.6.3",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",

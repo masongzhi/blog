@@ -7,6 +7,7 @@ import Loadable from 'react-loadable';
 // import { getCookie } from '../../utils/cookie';
 
 import { Layout, Menu, Row, Col, BackTop, Button, Icon } from 'antd';
+const { SubMenu } = Menu;
 // 按需加载
 import Loading from '../../components/Loading';
 const ArticleList = Loadable({
@@ -91,10 +92,38 @@ class Home extends Component {
         <Menu.Item key="1">
           <Link to="/article">文章</Link>
         </Menu.Item>
+        <SubMenu title="相关链接">
+          <Menu.ItemGroup title="react-qiniu-avatar-upload">
+            <Menu.Item key="2-1-1">
+              <a href="https://github.com/masongzhi/react-qiniu-avatar-upload" target="_blank">
+                <Icon type="github" />
+                仓库
+              </a>
+            </Menu.Item>
+            <Menu.Item key="2-1-2">
+              <a href="http://react-qiniu-avatar-upload.masongzhi.cn" target="_blank">
+                示例
+              </a>
+            </Menu.Item>
+          </Menu.ItemGroup>
+          <Menu.ItemGroup title="react-image-crop-upload">
+            <Menu.Item key="2-2-1">
+              <a href="https://github.com/masongzhi/react-image-crop-upload" target="_blank">
+                <Icon type="github" />
+                仓库
+              </a>
+            </Menu.Item>
+            <Menu.Item key="2-2-2">
+              <a href="http://react-image-crop-upload.masongzhi.cn" target="_blank">
+                示例
+              </a>
+            </Menu.Item>
+          </Menu.ItemGroup>
+        </SubMenu>
         {/*root账户登录后可以看到写作入口*/}
         {user &&
           user.role === 'root' && (
-            <Menu.Item key="2">
+            <Menu.Item key="3">
               <Link to="/write">写作</Link>
             </Menu.Item>
           )}
