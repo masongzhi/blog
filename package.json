@@ -38,7 +38,7 @@
     "prettier": "^1.14.3",
     "pretty-quick": "^1.7.0",
     "react-app-rewired": "^1.6.2",
-    "webpack-bundle-analyzer": "^3.0.3"
+    "webpack-bundle-analyzer": "^3.3.2"
   },
   "husky": {
     "hooks": {
